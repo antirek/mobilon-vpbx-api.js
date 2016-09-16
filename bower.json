@@ -1,0 +1,20 @@
+{
+  "name": "mobilon-vpbx-api.js",
+  "homepage": "https://github.com/antirek/mobilon-vpbx-api.js",
+  "authors": [
+    "Sergey Dmitriev <serge.dmitriev@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fetch": "^1.0.0"
+  }
+}

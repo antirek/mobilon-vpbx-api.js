@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Mobilon Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Outgoing call</h4>
+          <form class="form">
+
+            <div class="form-group">
+              <label for="key">User key</label>
+              <input type="text" class="form-control" id="key" placeholder="key">
+          </div>
+          <div class="form-group">
+              <label for="number">number</label>
+              <input type="text" class="form-control" id="number" placeholder="Number">
+          </div>
+          <a class="btn btn-default" id="submitRecallForm">Submit</a>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <script>
+    
+    var $number = $('#number');
+    var $key = $('#key');
+
+    $('#submitRecallForm').on('click',function(){
+      var key = $key.val();
+      var number = $number.val();
+      
+      fetch("//connect.mobilon.ru/api/call/CallToSubscriber?key=" + key + "&outboundNumber=" + number)
+      .then(function(data){
+        console.log('data',data);
+        $number.val('');
+      })
+      .catch(function(error){
+        console.log('error',error);
+        $number.val('');
+      });
+    });
+
+    $key.on('change',function(){
+      window.localStorage.userKey = $key.val();
+    });
+    
+    if(window.localStorage && window.localStorage.userKey){
+      $key.val(window.localStorage.userKey);
+    }
+    
+    </script>
+
+  </body>
+</html>
