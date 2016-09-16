@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="../dist/mobilon-vpbx-api.js"></script>
   </head>
   <body>
     <div class="container">
@@ -28,33 +30,40 @@
 
     </div>
     <script>
-    
-    var $number = $('#number');
-    var $key = $('#key');
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var $number = $('#number');
+      var $key = $('#key');
 
-    $('#submitRecallForm').on('click',function(){
-      var key = $key.val();
-      var number = $number.val();
-      
-      fetch("//connect.mobilon.ru/api/call/CallToSubscriber?key=" + key + "&outboundNumber=" + number)
-      .then(function(data){
-        console.log('data',data);
-        $number.val('');
-      })
-      .catch(function(error){
-        console.log('error',error);
-        $number.val('');
+      if(window.localStorage && window.localStorage.userKey){
+        $key.val(window.localStorage.userKey);
+      }
+
+      var api = new MobilonVPBXApi($key.val());
+
+      api.subscribe(function (event){
+        console.log(event);
       });
-    });
 
-    $key.on('change',function(){
-      window.localStorage.userKey = $key.val();
+      $('#submitRecallForm').on('click',function(){
+        var key = $key.val();
+        var number = $number.val();
+        
+        api.call(number)
+        .then(function(data){
+          console.log('data',data);
+          $number.val('');
+        })
+        .catch(function(error){
+          console.log('error',error);
+          $number.val('');
+        });
+      });
+
+      $key.on('change',function(){
+        window.localStorage.userKey = $key.val();
+      });
+      
     });
-    
-    if(window.localStorage && window.localStorage.userKey){
-      $key.val(window.localStorage.userKey);
-    }
-    
     </script>
 
   </body>
