@@ -11,20 +11,30 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
+          <h4>Settings</h4>
+          <form class="form">
+          <div class="form-group">
+            <label for="key">User key</label>
+            <input type="text" class="form-control" id="key" placeholder="key">
+          </div>
+          </form>
+
           <h4>Outgoing call</h4>
           <form class="form">
 
-            <div class="form-group">
-              <label for="key">User key</label>
-              <input type="text" class="form-control" id="key" placeholder="key">
-          </div>
           <div class="form-group">
-              <label for="number">number</label>
-              <input type="text" class="form-control" id="number" placeholder="Number">
+            <label for="number">number</label>
+            <input type="text" class="form-control" id="number" placeholder="Number">
           </div>
+        
           <a class="btn btn-default" id="submitRecallForm">Submit</a>
           </form>
+        </div>
+
+        <div class="col-md-6">
+          <h4>Incoming info</h4>
+          <div id="callinfo"></div>
         </div>
       </div>
 
@@ -42,6 +52,7 @@
 
       api.subscribe(function (event){
         console.log(event);
+        $('#callinfo').html(event.data);
       });
 
       $('#submitRecallForm').on('click',function(){
