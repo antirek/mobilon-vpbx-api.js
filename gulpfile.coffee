@@ -3,7 +3,7 @@ concat = require 'gulp-concat'
 uglify = require 'gulp-uglify'
 
 
-gulp.task 'build', ()->  
+gulp.task 'build', ()->
   gulp.src [
     './bower_components/fetch/fetch.js',
     './js/*.js']
@@ -11,10 +11,10 @@ gulp.task 'build', ()->
   .pipe gulp.dest './dist'
 
 
-gulp.task 'build-minify', ()->  
+gulp.task 'build-minify', ()->
   gulp.src [
     './bower_components/fetch/fetch.js',
-    './js/webcall.js']
+    './js/*.js']
   .pipe uglify()
   .pipe concat 'mobilon-vpbx-api.min.js'
   .pipe gulp.dest './dist'

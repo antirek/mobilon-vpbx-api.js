@@ -433,28 +433,43 @@
 })(typeof self !== 'undefined' ? self : this);
 
 var MobilonVPBXApi = function (keyIn) {
-	var key = keyIn;
+    var key = keyIn;
+    var token = null;
 
-	var call = function (number) {
-		var callUrl = '//connect.mobilon.ru/api/call/CallToSubscriber';
-		return fetch(callUrl + "?key=" + key + "&outboundNumber=" + number);
-	};
+    var call = function (number) {
+        var callUrl = '//connect.mobilon.ru/api/call/CallToSubscriber';
+        return fetch(callUrl + "?key=" + key + "&outboundNumber=" + number);
+    };
 
-	var subscribe = function (callback) {
-		var subscribeUrl = 'wss://webapi.mobilon.ru:8080/';
-		var socket = new WebSocket(subscribeUrl);
+    var subscribe = function (callback) {
+        var subscribeUrl = 'wss://webapi.mobilon.ru:8080/';
+        var socket = new WebSocket(subscribeUrl);
 
-		socket.onmessage = function (event) {
-  			callback(event);
-		};
+        socket.onmessage = function (event) {
+            callback(event);
+        };
 
-		socket.onopen = function() {
-  			socket.send('{"key":"' + key + '"}');
-		};
-	};
+        socket.onopen = function () {
+            socket.send('{"key":"' + key + '"}');
+        };
+    };
+    var setToken = function (tokenIn) {
+        token = tokenIn;
+    };
 
-	return {
-		call: call,
-		subscribe: subscribe
-	};
+    var info = function (callid) {
+        if (token) {
+            var infoUrl = '//connect.mobilon.ru/api/call/info';
+            return fetch(infoUrl + "?token=" + token + "&callid=" + callid);
+        } else {
+            return Promise.reject('token not defined');
+        }
+    };
+
+    return {
+        call: call,
+        subscribe: subscribe,
+        setToken: setToken,
+        info: info
+    };
 };
