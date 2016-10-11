@@ -452,6 +452,7 @@ var MobilonVPBXApi = function (keyIn) {
         socket.onopen = function () {
             socket.send('{"key":"' + key + '"}');
         };
+        return socket;
     };
     var setToken = function (tokenIn) {
         token = tokenIn;
