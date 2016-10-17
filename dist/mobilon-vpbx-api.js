@@ -454,6 +454,7 @@ var MobilonVPBXApi = function (keyIn) {
         };
         return socket;
     };
+
     var setToken = function (tokenIn) {
         token = tokenIn;
     };
@@ -467,10 +468,20 @@ var MobilonVPBXApi = function (keyIn) {
         }
     };
 
+    var journal = function(date){
+        if (token) {
+            var journalUrl = '//connect.mobilon.ru/api/call/journal';
+            return fetch(journalUrl + "?token=" + token + "&date=" + date);
+        } else {
+            return Promise.reject('token not defined');
+        }  
+    }
+
     return {
         call: call,
         subscribe: subscribe,
         setToken: setToken,
-        info: info
+        info: info,
+        journal:journal
     };
 };
