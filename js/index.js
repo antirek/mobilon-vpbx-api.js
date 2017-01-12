@@ -3,7 +3,7 @@ var MobilonVPBXApi = function (keyIn) {
     var token = null;
 
     var call = function (number) {
-        var callUrl = '//connect.mobilon.ru/api/call/CallToSubscriber';
+        var callUrl = 'https://connect.mobilon.ru/api/call/CallToSubscriber';
         return fetch(callUrl + "?key=" + key + "&outboundNumber=" + number);
     };
 
@@ -27,7 +27,7 @@ var MobilonVPBXApi = function (keyIn) {
 
     var info = function (callid) {
         if (token) {
-            var infoUrl = '//connect.mobilon.ru/api/call/info';
+            var infoUrl = 'https://connect.mobilon.ru/api/call/info';
             return fetch(infoUrl + "?token=" + token + "&callid=" + callid);
         } else {
             return Promise.reject('token not defined');
@@ -36,7 +36,7 @@ var MobilonVPBXApi = function (keyIn) {
 
     var journal = function(date){
         if (token) {
-            var journalUrl = '//connect.mobilon.ru/api/call/journal';
+            var journalUrl = 'https://connect.mobilon.ru/api/call/journal';
             return fetch(journalUrl + "?token=" + token + "&date=" + date);
         } else {
             return Promise.reject('token not defined');
